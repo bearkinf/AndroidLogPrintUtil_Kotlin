@@ -20,6 +20,7 @@ object LogPrintUtil {
 
     private var FLAGS = if (BuildConfig.DEBUG) All else None
 
+
     private var TAG = "log"
 
     /**
@@ -37,130 +38,102 @@ object LogPrintUtil {
         TAG = tag
     }
 
-
     /**
      * 로그켓 출력 메서드
      */
-    private fun buildMakeMessage(strMsg: Any): String {
+    private fun buildMakeMessage(strMsg: Any, sleepCheck_1: Boolean): String {
 
-        Thread.sleep(1)
+        if (sleepCheck_1) {
+            Thread.sleep(1)
+        }
 
-        val ste = Thread.currentThread().stackTrace[4]
-        val sb: StringBuilder
-        sb = StringBuilder()
-        sb.append("(" + ste.fileName + ":" + ste.lineNumber + ")")
+        val trace = Thread.currentThread().stackTrace
+        var position = 0
+        var find = false
+
+        trace.forEach {
+            if (it.className == this.javaClass.name) {
+                find = true
+            }
+            if (find && it.className != this.javaClass.name) {
+                 return@forEach
+            }
+            position++
+        }
+
+//        for (i in 0 until trace.size) {
+//            if (!find && trace[i].className != this.javaClass.name) {
+//                continue
+//            }
+//            if (trace[i].className == this.javaClass.name) {
+//                find = true
+//                continue
+//            }
+//            if (find && trace[i].className != this.javaClass.name) {
+//                position = i
+//                break
+//            }
+//        }
+
+        val ste = trace[position]
+        val sb = StringBuilder()
+        sb.append("(${ste.fileName}:${ste.lineNumber})")
         sb.append(strMsg)
         return sb.toString()
-
     }
+
 
     /**
      * 파란색, blue
      */
-    fun d(strMsg: Any) {
+    fun d(strMsg: Any, strTag: String? = null, sleepCheck: Boolean = false) {
         if (FLAGS and Debug != Debug) {
             return
         }
-
-        Log.d(TAG, buildMakeMessage(strMsg))
+        Log.d(strTag ?: TAG, buildMakeMessage(strMsg, sleepCheck))
     }
 
     /**
-     * 파란색, blue
+     *  노란색, yellow
      */
-    fun d(strTag: String, strMsg: Any) {
+    fun w(strMsg: Any, strTag: String? = null, sleepCheck: Boolean = false) {
         if (FLAGS and Debug != Debug) {
             return
         }
-
-        Log.d(strTag, buildMakeMessage(strMsg))
+        Log.w(strTag ?: TAG, buildMakeMessage(strMsg, sleepCheck))
     }
 
     /**
-     * 노란색, yellow
+     *  빨간색, red
      */
-    fun w(strMsg: Any) {
-        if (FLAGS and Warn != Warn) {
+    fun e(strMsg: Any, strTag: String? = null, sleepCheck: Boolean = false) {
+        if (FLAGS and Debug != Debug) {
             return
         }
+        Log.e(strTag ?: TAG, buildMakeMessage(strMsg, sleepCheck))
 
-        Log.w(TAG, buildMakeMessage(strMsg))
+    }
+
+
+    /**
+     *  녹색, green
+     */
+    fun i(strMsg: Any, strTag: String? = null, sleepCheck: Boolean = false) {
+        if (FLAGS and Debug != Debug) {
+            return
+        }
+        Log.i(strTag ?: TAG, buildMakeMessage(strMsg, sleepCheck))
     }
 
     /**
-     * 노란색, yellow
+     *  녹색, green
      */
-    fun w(strTag: String, strMsg: Any) {
-        if (FLAGS and Warn != Warn) {
+    fun v(strMsg: Any, strTag: String? = null, sleepCheck: Boolean = false) {
+        if (FLAGS and Debug != Debug) {
             return
         }
-
-        Log.w(strTag, buildMakeMessage(strMsg))
+        Log.v(strTag ?: TAG, buildMakeMessage(strMsg, sleepCheck))
     }
 
-    /**
-     * 빨간색, red
-     */
-    fun e(strMsg: Any) {
-        if (FLAGS and Error != Error) {
-            return
-        }
 
-        Log.e(TAG, buildMakeMessage(strMsg))
-    }
-
-    /**
-     * 빨간색, red
-     */
-    fun e(strTag: String, strMsg: Any) {
-        if (FLAGS and Error != Error) {
-            return
-        }
-
-        Log.e(strTag, buildMakeMessage(strMsg))
-    }
-
-    /**
-     * 녹색, green
-     */
-    fun i(strMsg: Any) {
-        if (FLAGS and Info != Info) {
-            return
-        }
-
-        Log.i(TAG, buildMakeMessage(strMsg))
-    }
-
-    /**
-     * 녹색, green
-     */
-    fun i(strTag: String, strMsg: Any) {
-        if (FLAGS and Info != Info) {
-            return
-        }
-
-        Log.i(strTag, buildMakeMessage(strMsg))
-    }
-
-    /**
-     * 하얀색, white
-     */
-    fun v(strMsg: Any) {
-        if (FLAGS and Verbose != Verbose) {
-            return
-        }
-
-        Log.v(TAG, buildMakeMessage(strMsg))
-    }
-
-    /**
-     * 하얀색, white
-     */
-    fun v(strTag: String, strMsg: Any) {
-        if (FLAGS and Verbose != Verbose) {
-            return
-        }
-
-        Log.v(strTag, buildMakeMessage(strMsg))
-    }
 }

@@ -14,13 +14,10 @@ class MainActivity : AppCompatActivity() {
         LogPrintUtil.setDebug(if (BuildConfig.DEBUG) LogPrintUtil.All else LogPrintUtil.None)
         LogPrintUtil.setTag("Log")
 
+        LogPrintUtil.d("Kotlin log false")
+        LogPrintUtil.d("")
+        LogPrintUtil.d("Kotlin log", sleepCheck = false)
 
-        LogPrintUtil.e("Korlin log")
-        LogPrintUtil.w("Korlin log")
-        LogPrintUtil.d("Korlin log")
-        LogPrintUtil.i("Korlin log")
-        LogPrintUtil.v("Korlin log")
-
-
+        LogPrintUtil.d("Kotlin log sleepCheck true", "bear", true)
     }
 }
