@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity() {
         LogPrintUtil.d("Kotlin log false")
         LogPrintUtil.d("")
         LogPrintUtil.d("Kotlin log", sleepCheck = false)
-
         LogPrintUtil.d("Kotlin log sleepCheck true", "bear", true)
     }
 }
