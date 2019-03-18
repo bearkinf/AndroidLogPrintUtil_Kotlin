@@ -9,34 +9,33 @@ import android.util.Log
  */
 object LogPrintUtil {
 
-    private val Debug = 0x01
-    private val Warn = 0x02
-    private val Error = 0x04
-    private val Info = 0x08
-    private val Verbose = 0x10
+    enum class LogLevel(val value: Int) {
 
-    val None = 0x00
-    val All = Debug or Warn or Error or Info or Verbose
+        None(0x0),
 
-    private var FLAGS = if (BuildConfig.DEBUG) All else None
+        Debug(0x1),
+        Warn(0x2),
+        Error(0x4),
+        Info(0x8),
+        Verbose(0x10),
 
+        All(LogLevel.Debug.value or LogLevel.Warn.value or LogLevel.Error.value or LogLevel.Info.value or LogLevel.Verbose.value)
 
-    private var TAG = "log"
-
-    /**
-     * 디버깅 설정
-     * LogPrintUtil.setDebug( BuildConfig.DEBUG ? LogPrintUtil.All : LogPrintUtil.None);
-     */
-    fun setDebug(flags: Int) {
-        FLAGS = flags
     }
 
-    /**
-     * 테그설정
-     */
-    fun setTag(tag: String) {
-        TAG = tag
-    }
+    var debug: Boolean = false  //디버그모드 일때는 true
+        set(value) {
+            field = value
+            FLAGS = if (value) LogPrintUtil.LogLevel.All else LogPrintUtil.LogLevel.None
+        }
+
+
+    var FLAGS: LogLevel = LogPrintUtil.LogLevel.None
+        set(value) {
+            if (debug) field = value
+        }
+
+    var TAG = "log"
 
     /**
      * 로그켓 출력 메서드
@@ -56,7 +55,7 @@ object LogPrintUtil {
                 find = true
             }
             if (find && it.className != this.javaClass.name) {
-                 return@forEach
+                return@forEach
             }
             position++
         }
@@ -87,7 +86,12 @@ object LogPrintUtil {
      * 파란색, blue
      */
     fun d(strMsg: Any, strTag: String? = null, sleepCheck: Boolean = false) {
-        if (FLAGS and Debug != Debug) {
+
+
+        if (
+                (FLAGS.value and LogPrintUtil.LogLevel.Debug.value)
+                !=
+                LogPrintUtil.LogLevel.Debug.value) {
             return
         }
         Log.d(strTag ?: TAG, buildMakeMessage(strMsg, sleepCheck))
@@ -97,7 +101,7 @@ object LogPrintUtil {
      *  노란색, yellow
      */
     fun w(strMsg: Any, strTag: String? = null, sleepCheck: Boolean = false) {
-        if (FLAGS and Debug != Debug) {
+        if (FLAGS.value and LogPrintUtil.LogLevel.Warn.value != LogPrintUtil.LogLevel.Warn.value) {
             return
         }
         Log.w(strTag ?: TAG, buildMakeMessage(strMsg, sleepCheck))
@@ -107,7 +111,7 @@ object LogPrintUtil {
      *  빨간색, red
      */
     fun e(strMsg: Any, strTag: String? = null, sleepCheck: Boolean = false) {
-        if (FLAGS and Debug != Debug) {
+        if (FLAGS.value and LogPrintUtil.LogLevel.Error.value != LogPrintUtil.LogLevel.Error.value) {
             return
         }
         Log.e(strTag ?: TAG, buildMakeMessage(strMsg, sleepCheck))
@@ -119,7 +123,7 @@ object LogPrintUtil {
      *  녹색, green
      */
     fun i(strMsg: Any, strTag: String? = null, sleepCheck: Boolean = false) {
-        if (FLAGS and Debug != Debug) {
+        if (FLAGS.value and LogPrintUtil.LogLevel.Info.value != LogPrintUtil.LogLevel.Info.value) {
             return
         }
         Log.i(strTag ?: TAG, buildMakeMessage(strMsg, sleepCheck))
@@ -129,7 +133,7 @@ object LogPrintUtil {
      *  녹색, green
      */
     fun v(strMsg: Any, strTag: String? = null, sleepCheck: Boolean = false) {
-        if (FLAGS and Debug != Debug) {
+        if (FLAGS.value and LogPrintUtil.LogLevel.Verbose.value != LogPrintUtil.LogLevel.Verbose.value) {
             return
         }
         Log.v(strTag ?: TAG, buildMakeMessage(strMsg, sleepCheck))
