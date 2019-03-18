@@ -60,20 +60,6 @@ object LogPrintUtil {
             position++
         }
 
-//        for (i in 0 until trace.size) {
-//            if (!find && trace[i].className != this.javaClass.name) {
-//                continue
-//            }
-//            if (trace[i].className == this.javaClass.name) {
-//                find = true
-//                continue
-//            }
-//            if (find && trace[i].className != this.javaClass.name) {
-//                position = i
-//                break
-//            }
-//        }
-
         val ste = trace[position]
         val sb = StringBuilder()
         sb.append("(${ste.fileName}:${ste.lineNumber})")
@@ -87,11 +73,7 @@ object LogPrintUtil {
      */
     fun d(strMsg: Any, strTag: String? = null, sleepCheck: Boolean = false) {
 
-
-        if (
-                (FLAGS.value and LogPrintUtil.LogLevel.Debug.value)
-                !=
-                LogPrintUtil.LogLevel.Debug.value) {
+        if ((FLAGS.value and LogPrintUtil.LogLevel.Debug.value) != LogPrintUtil.LogLevel.Debug.value) {
             return
         }
         Log.d(strTag ?: TAG, buildMakeMessage(strMsg, sleepCheck))
