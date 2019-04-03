@@ -1,5 +1,8 @@
 # AndroidLogLibKotlin
 
-  LogPrintUtil.setDebug(if (BuildConfig.DEBUG) LogUtil.All else LogUtil.None)
 
-  LogPrintUtil.e("BaseActivity start")
+LogPrintUtil.debug = BuildConfig.DEBUG
+
+LogPrintUtil.TAG = "Log"
+
+LogPrintUtil.e("BaseActivity start")
