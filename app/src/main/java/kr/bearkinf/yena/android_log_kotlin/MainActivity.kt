@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        LogPrintUtil.debug = false
+        LogPrintUtil.debug = BuildConfig.DEBUG
 
         LogPrintUtil.TAG = "Log"
 

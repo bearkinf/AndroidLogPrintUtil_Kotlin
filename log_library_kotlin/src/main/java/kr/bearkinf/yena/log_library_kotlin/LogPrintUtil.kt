@@ -12,7 +12,6 @@ object LogPrintUtil {
     enum class LogLevel(val value: Int) {
 
         None(0x0),
-
         Debug(0x1),
         Warn(0x2),
         Error(0x4),
@@ -20,18 +19,20 @@ object LogPrintUtil {
         Verbose(0x10),
 
         All(LogLevel.Debug.value or LogLevel.Warn.value or LogLevel.Error.value or LogLevel.Info.value or LogLevel.Verbose.value)
-
     }
 
     var debug: Boolean = false  //디버그모드 일때는 true
         set(value) {
+            //값을 받고
             field = value
+            //플래그 설정을 변경한다.
             FLAGS = if (value) LogPrintUtil.LogLevel.All else LogPrintUtil.LogLevel.None
         }
 
 
     var FLAGS: LogLevel = LogPrintUtil.LogLevel.None
         set(value) {
+            //디버그가 true 일때 필드값을 변경한다.
             if (debug) field = value
         }
 
@@ -62,7 +63,9 @@ object LogPrintUtil {
 
         val ste = trace[position]
         val sb = StringBuilder()
-        sb.append("(${ste.fileName}:${ste.lineNumber})")
+        sb.append("[${Thread.currentThread().name}_Thread]")
+        sb.append("(${ste.fileName}:${ste.lineNumber}):")
+        sb.append("${ste.methodName}() : ")
         sb.append(strMsg)
         return sb.toString()
     }
@@ -112,7 +115,7 @@ object LogPrintUtil {
     }
 
     /**
-     *  녹색, green
+     *  흰색, white
      */
     fun v(strMsg: Any, strTag: String? = null, sleepCheck: Boolean = false) {
         if (FLAGS.value and LogPrintUtil.LogLevel.Verbose.value != LogPrintUtil.LogLevel.Verbose.value) {
