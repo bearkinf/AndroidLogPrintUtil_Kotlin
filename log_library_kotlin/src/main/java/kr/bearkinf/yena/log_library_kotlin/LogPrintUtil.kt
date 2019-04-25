@@ -2,6 +2,7 @@ package kr.bearkinf.yena.log_library_kotlin
 
 import android.util.Log
 
+
 /**
  * 안드로이드 스튜디오 로그켓 클래스.
  * 안드로이드 스튜디오 로그켓에서 로그켓 출력한 곳을 쉽게
@@ -64,7 +65,7 @@ object LogPrintUtil {
         val ste = trace[position]
         val sb = StringBuilder()
         sb.append("[${Thread.currentThread().name}_Thread]")
-        sb.append("(${ste.fileName}:${ste.lineNumber}):")
+        sb.append("(${ste.fileName}:${ste.lineNumber})::")
         sb.append("${ste.methodName}() : ")
         sb.append(strMsg)
         return sb.toString()
