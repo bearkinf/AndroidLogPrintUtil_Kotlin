@@ -1,7 +1,8 @@
 package kr.bearkinf.yena.android_log_kotlin
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+
+import androidx.appcompat.app.AppCompatActivity
 import kr.bearkinf.yena.log_library_kotlin.LogPrintUtil
 
 class MainActivity : AppCompatActivity() {
@@ -12,6 +13,8 @@ class MainActivity : AppCompatActivity() {
 
 
         LogPrintUtil.debug = BuildConfig.DEBUG
+
+//        LogPrintUtil.debug = BuildC
 
         LogPrintUtil.TAG = "Log"
 
