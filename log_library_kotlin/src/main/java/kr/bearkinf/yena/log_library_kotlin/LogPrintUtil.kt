@@ -73,18 +73,19 @@ object LogPrintUtil {
 
 
     /**
-     * 파란색, blue
+     * 디버그 Debug : 6897BB
      */
     fun d(strMsg: Any, strTag: String? = null, sleepCheck: Boolean = false) {
-
         if ((FLAGS.value and LogPrintUtil.LogLevel.Debug.value) != LogPrintUtil.LogLevel.Debug.value) {
             return
         }
+
         Log.d(strTag ?: TAG, buildMakeMessage(strMsg, sleepCheck))
+
     }
 
     /**
-     *  노란색, yellow
+     *  경고 Warn : BBB529
      */
     fun w(strMsg: Any, strTag: String? = null, sleepCheck: Boolean = false) {
         if (FLAGS.value and LogPrintUtil.LogLevel.Warn.value != LogPrintUtil.LogLevel.Warn.value) {
@@ -94,7 +95,7 @@ object LogPrintUtil {
     }
 
     /**
-     *  빨간색, red
+     *  오류 Error : FF6B68
      */
     fun e(strMsg: Any, strTag: String? = null, sleepCheck: Boolean = false) {
         if (FLAGS.value and LogPrintUtil.LogLevel.Error.value != LogPrintUtil.LogLevel.Error.value) {
@@ -104,9 +105,21 @@ object LogPrintUtil {
 
     }
 
+//    /**
+//     *  오류 Error : FF6B68
+//     */
+//    fun e(strMsg: Any, strTag: String? = null, sleepCheck: Boolean = false, tr: Throwable? = null) {
+//        if (FLAGS.value and LogPrintUtil.LogLevel.Error.value != LogPrintUtil.LogLevel.Error.value) {
+//            return
+//        }
+//        if (tr != null) Log.e(strTag ?: TAG, buildMakeMessage(strMsg, sleepCheck))
+//        else Log.e(strTag ?: TAG, buildMakeMessage(strMsg, sleepCheck), tr)
+//
+//    }
+
 
     /**
-     *  녹색, green
+     *  정보 Info : 6A8759
      */
     fun i(strMsg: Any, strTag: String? = null, sleepCheck: Boolean = false) {
         if (FLAGS.value and LogPrintUtil.LogLevel.Info.value != LogPrintUtil.LogLevel.Info.value) {
@@ -116,7 +129,8 @@ object LogPrintUtil {
     }
 
     /**
-     *  흰색, white
+     *  상세 흰색, white
+
      */
     fun v(strMsg: Any, strTag: String? = null, sleepCheck: Boolean = false) {
         if (FLAGS.value and LogPrintUtil.LogLevel.Verbose.value != LogPrintUtil.LogLevel.Verbose.value) {
