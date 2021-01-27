@@ -9,7 +9,7 @@ allprojects {
     }
 }
 dependencies {
-        implementation 'com.github.bearkinf:AndroidLogPrintUtil_Kotlin:1.3.0'
+        implementation 'com.github.bearkinf:AndroidLogPrintUtil_Kotlin:1.5.0'
 }
 
 LogPrintUtil.debug = BuildConfig.DEBUG
